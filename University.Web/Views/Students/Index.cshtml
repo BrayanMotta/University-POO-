@@ -1,9 +1,12 @@
-﻿@model List<University.Web.Models.Student>
+﻿@model List<University.BL.DTOs.StudentDTO>
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+
+@Html.ActionLink("New", "Create", "Students", null, new { @class = "btn btn-primary" })
+<hr/>
 
 <table class="table table-bordered">
     <thead>
@@ -27,9 +30,10 @@
     </tbody>
 </table>
 
-@if (ViewBag.Data != null && ViewBag.Message != null) {
+@if (ViewBag.Data != null && ViewBag.Message != null)
+{
 
-    
+
     <ul>
         <li>@ViewBag.Data</li>
         <li>@ViewBag.Message</li>

@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using University.Web.Models;
-using System.Collections.Generic;
+using University.BL.Models;
+using University.BL.DTOs;
+using University.BL.Data;
+
 
 namespace University.Web.Controllers
 {
     public class StudentsController : Controller
+
     {
+        private readonly UniversityContext context = new UniversityContext();
+
         [HttpGet]
         // GET: Students
         public ActionResult Index()
         {
 
-            var students = new List<Student>(); //ilimitada
+            var students = new List<StudentDTO>(); //ilimitada
 
-            students.Add(new Student { ID = 1, FirstMidName = "David", LastName = "Santafe", EnrollmentDate = DateTime.Now });
-            students.Add(new Student { ID = 2, FirstMidName = "Carson", LastName = "Alexander", EnrollmentDate = DateTime.Now });
-            students.Add(new Student { ID = 3, FirstMidName = "Meredith", LastName = "Alonso", EnrollmentDate = DateTime.Now });
+            students.Add(new StudentDTO { ID = 1, FirstMidName = "David", LastName = "Santafe", EnrollmentDate = DateTime.Now });
+            students.Add(new StudentDTO { ID = 2, FirstMidName = "Carson", LastName = "Alexander", EnrollmentDate = DateTime.Now });
+            students.Add(new StudentDTO { ID = 3, FirstMidName = "Meredith", LastName = "Alonso", EnrollmentDate = DateTime.Now });
 
             ViewBag.Data = "Mesaje de prueba";
             ViewBag.Message = "Mesaje de prueba";
@@ -37,7 +42,7 @@ namespace University.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Student student)
+        public ActionResult Create(StudentDTO student)
         {
             try
             {
@@ -47,10 +52,17 @@ namespace University.Web.Controllers
                 if (student.EnrollmentDate > DateTime.Now)
                     throw new Exception("La fecha de matricula no puede ser mayor a la fecha actual");
 
-                var id = student.ID;
-                var FirstMidName = student.FirstMidName;
-                var LastName = student.LastName;
-                var enrollmentDate = student.EnrollmentDate;
+                //INSERT INTO Students(FirstMidName,LastName,EnrollmentDate) VALUES(@FirstMidName, @LastName, @EnrollmentDate)
+                context.Students.Add(new Student { 
+                    FirstMidName = student.FirstMidName,
+                    LastName = student.LastName,
+                    EnrollmentDate = student.EnrollmentDate
+                
+                });
+                context.SaveChanges();
+                
+
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
