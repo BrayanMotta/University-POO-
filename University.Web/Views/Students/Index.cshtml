@@ -6,7 +6,7 @@
 <h2>Index</h2>
 
 @Html.ActionLink("New", "Create", "Students", null, new { @class = "btn btn-primary" })
-<hr/>
+<hr />
 
 <table class="table table-bordered">
     <thead>
@@ -15,6 +15,7 @@
             <th>Last Name</th>
             <th>First MidName</th>
             <th>Enrollment Date</th>
+            <th>Options</th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +26,12 @@
                 <td>@item.LastName</td>
                 <td>@item.FirstMidName</td>
                 <td>@item.EnrollmentDate</td>
+                <td>
+                    @Html.ActionLink("Courses", "Index", "Students", new { studentId = item.ID }, new { @class = "btn btn-sm btn-info" })
+                    @Html.ActionLink("Edit", "Edit", "Students", new { id = item.ID }, new { @class = "btn btn-sm btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", "Students", new { id = item.ID }, new { @class = "btn btn-sm btn-danger" })
+                </td>
+
             </tr>
         }
     </tbody>
@@ -40,3 +47,28 @@
     </ul>
 
 }
+
+@if (ViewBag.Courses != null)
+{
+    <h1>Curses</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Credits</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in (List<University.BL.DTOs.CourseDTO>)ViewBag.Courses)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Credits</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
