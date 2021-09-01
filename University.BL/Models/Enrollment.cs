@@ -21,9 +21,11 @@ namespace University.BL.Models
         [ForeignKey("Student")]
         public int StudentID { get; set; }
 
+        public int Grade { get; set; }
+
+
         public Course Course { get; set; }
         public Student Student { get; set; }
 
-        public int Grade { get; set; }
     }
 }

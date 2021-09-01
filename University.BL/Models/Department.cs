@@ -19,5 +19,7 @@ namespace University.BL.Models
 
         [ForeignKey("Instructor")]
         public int InstructorID { get; set; }
+
+        public Instructor Instructor { get; set; }
     }
 }

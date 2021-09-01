@@ -18,9 +18,9 @@ namespace University.BL.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
-        public DbSet<Enrollment> OfficeAssignment { get; set; }
-        public DbSet<Enrollment> Instructor { get; set; }
-        public DbSet<Enrollment> Department { get; set; }
-        public DbSet<Enrollment> CourseInstructor { get; set; }
+        public DbSet<OfficeAssignment> OfficeAssignments { get; set; }
+        public DbSet<Instructor> Instructor { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<CourseInstructor> CourseInstructor { get; set; }
     }
 }
