@@ -6,8 +6,7 @@ using System.Web.Mvc;
 using University.BL.Models;
 using University.BL.DTOs;
 using University.BL.Data;
-
-
+using PagedList;
 
 namespace University.Web.Controllers
 {
@@ -18,7 +17,7 @@ namespace University.Web.Controllers
 
         [HttpGet]
         // GET: Students
-        public ActionResult Index(int? studentId)
+        public ActionResult Index(int? studentId, int? pageSize, int? page)
         {
 
             var query = context.Students.ToList();
@@ -78,7 +77,15 @@ namespace University.Web.Controllers
 
             // ViewData["Data"] = "Mensaje de prueba";
 
-            return View(students);
+            //paginacion
+            #region Paginacion
+            pageSize = (pageSize ?? 10);
+            page = (page ?? 1);
+            ViewBag.PageSize = pageSize;
+            #endregion
+
+
+            return View(students.ToPagedList(page.Value, pageSize.Value));
         }
 
         [HttpGet]
