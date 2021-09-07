@@ -16,7 +16,7 @@ namespace University.Web.Controllers
 
         [HttpGet]
  
-        public ActionResult Index(int? pageSize, int? page)
+        public ActionResult Index(int? courseId, int? pageSize, int? page)
         {
 
             var query = context.Courses.ToList();
@@ -29,6 +29,27 @@ namespace University.Web.Controllers
                                 Credits = x.Credits,
                             }).ToList();
 
+            if (courseId != null)
+            {
+
+                //SELECT r.*
+                //FROM[dbo].[Enrollment] q
+                //JOIN Course r ON q.CourseID = r.CourseID
+                //WHERE q.StudentID = 1
+
+                var instructor = (from q in context.CourseInstructor
+                               join r in context.Instructor on q.InstructorID equals r.ID
+                               where q.CourseID == courseId
+                               select new InstructorDTO
+                               {
+                                   ID = r.ID,
+                                   LastName = r.LastName,
+                                   FirstMidName = r.FirstMidName
+                               }).ToList();
+
+                ViewBag.Courses = instructor;
+
+            }
 
             //paginacion
             #region Paginacion

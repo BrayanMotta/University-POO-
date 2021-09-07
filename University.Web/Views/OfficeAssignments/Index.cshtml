@@ -6,9 +6,8 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@Html.ActionLink("New", "Create", "OfficeAssignments", null, new { @class = "btn btn-primary" })
+<hr />
 <table class="table">
     <tr>
         <th>
@@ -17,19 +16,25 @@
         <th>
             @Html.DisplayNameFor(model => model.Location)
         </th>
-        
+        <th>
+            Options
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Instructor.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
-        
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instructor.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <th>
+                @Html.ActionLink("Edit", "Edit", "OfficeAssignments", new { id = item.InstructorID }, new { @class = "btn btn-sm btn-primary" })
+                @Html.ActionLink("Delete", "Delete", "OfficeAssignments", new { id = item.InstructorID }, new { @class = "btn btn-sm btn-danger" })
+            </th>
+        </tr>
+    }
 
 </table>

@@ -17,7 +17,7 @@ namespace University.BL.DTOs
         public string Name { get; set; }
 
         [Required]
-        public double Budget { get; set; }
+        public decimal Budget { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }

@@ -47,13 +47,14 @@ namespace University.Web.Controllers
 
         public ActionResult Create()
         {
+            LoadData();
             return View();
         }
 
         [HttpPost]
         public ActionResult Create(DepartmentDTO department)
         {
-
+            LoadData();
             if (!ModelState.IsValid)
                 return View(department);
 
@@ -75,13 +76,24 @@ namespace University.Web.Controllers
 
         }
 
+        private void LoadData()
+        {
+            var instructors = context.Instructor.Select(x => new InstructorDTO
+            {
+                ID = x.ID,
+                FirstMidName = x.FirstMidName,
+                LastName = x.LastName
 
+            }).ToList();
+
+            ViewData["Instructors"] = new SelectList(instructors, "ID", "FullName");
+        }
 
         [HttpGet]
 
         public ActionResult Edit(int id)
         {
-
+            LoadData();
             var department = context.Department.Where(x => x.DepartmentID == id)
                             .Select(x => new DepartmentDTO
                             {

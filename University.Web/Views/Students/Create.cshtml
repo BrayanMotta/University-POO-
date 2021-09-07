@@ -38,7 +38,13 @@
     @Html.EditorFor(m => m.EnrollmentDate, new { htmlAttributes = new { @class = "form-control" } })
     @Html.ValidationMessageFor(m => m.EnrollmentDate, "", new { @class = "text-danger" })
 
-    <input type="submit" value="Create" class="btn btn-primary" />
+    <hr />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
 
 </form>
 

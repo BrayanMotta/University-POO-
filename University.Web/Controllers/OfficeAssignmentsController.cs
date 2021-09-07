@@ -19,7 +19,8 @@ namespace University.Web.Controllers
             {
                 InstructorID = x.InstructorID,
                 Location = x.Location,
-                Instructor = new InstructorDTO { 
+                Instructor = new InstructorDTO
+                {
                     FirstMidName = x.Instructor.FirstMidName,
                     LastName = x.Instructor.LastName
                 }
@@ -29,7 +30,7 @@ namespace University.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create() 
+        public ActionResult Create()
         {
             LoadData();
 
@@ -54,7 +55,7 @@ namespace University.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        private void LoadData() 
+        private void LoadData()
         {
             var instructors = context.Instructor.Select(x => new InstructorDTO
             {
@@ -65,6 +66,71 @@ namespace University.Web.Controllers
             }).ToList();
 
             ViewData["Instructors"] = new SelectList(instructors, "ID", "FullName");
+        }
+
+        [HttpGet]
+
+        public ActionResult Edit(int id)
+        {
+
+            var course = context.OfficeAssignments.Where(x => x.InstructorID == id)
+                            .Select(x => new OfficeAssignmentDTO
+                            {
+                                InstructorID = x.InstructorID,
+                                Location = x.Location
+                            }).FirstOrDefault();
+
+            return View(course);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(OfficeAssignmentDTO office)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return View(office);
+
+
+                //var studentModel = context.Students.Where(x => x.ID == student.ID).Select(x => x).FirstOrDefault();
+                var officeModel = context.OfficeAssignments.FirstOrDefault(x => x.InstructorID == office.InstructorID);
+
+                //campos que se van a modificar
+                //sobreescribo las propiedades del modelo de base de datos
+                officeModel.Location = office.Location;
+
+                //aplique los cambios en base de datos
+                context.SaveChanges();
+
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
+
+            return View(office);
+
+        }
+
+        [HttpGet]
+
+        public ActionResult Delete(int id)
+        {
+
+            var officeModel = context.OfficeAssignments.FirstOrDefault(x => x.InstructorID == id);
+
+            context.OfficeAssignments.Remove(officeModel);
+
+            context.SaveChanges();
+
+
+
+
+
+            return RedirectToAction("Index");
         }
     }
 }
