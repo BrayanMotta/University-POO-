@@ -19,7 +19,7 @@ namespace University.Web.Controllers
         public ActionResult Index(int? pageSize, int? page)
         {
 
-            var query = context.Department.ToList();
+            var query = context.Department.Include("Instructor").ToList();
 
 
             var deparment = query.Select(x => new DepartmentDTO
@@ -28,7 +28,11 @@ namespace University.Web.Controllers
                 Name = x.Name,
                 Budget = x.Budget,
                 StartDate = x.StartDate,
-                InstructorID = x.InstructorID
+                InstructorID = x.InstructorID,
+                Instructor = new InstructorDTO {
+                    FirstMidName = x.Instructor.FirstMidName,
+                    LastName = x.Instructor.LastName
+                }
             }).ToList();
 
 
@@ -110,8 +114,10 @@ namespace University.Web.Controllers
         [HttpPost]
         public ActionResult Edit(DepartmentDTO department)
         {
+            
             try
             {
+                LoadData();
                 if (!ModelState.IsValid)
                     return View(department);
 
@@ -121,10 +127,11 @@ namespace University.Web.Controllers
 
                 //campos que se van a modificar
                 //sobreescribo las propiedades del modelo de base de datos
-                departmentModel.Name = departmentModel.Name;
-                departmentModel.Budget = departmentModel.Budget;
-                departmentModel.StartDate = departmentModel.StartDate;
-                departmentModel.InstructorID = departmentModel.InstructorID;
+                
+                departmentModel.Name = department.Name;
+                departmentModel.Budget = department.Budget;
+                departmentModel.StartDate = department.StartDate;
+                departmentModel.InstructorID = department.InstructorID;
 
                 //aplique los cambios en base de datos
                 context.SaveChanges();

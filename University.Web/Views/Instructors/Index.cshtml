@@ -14,6 +14,7 @@
     <p>
         <select name="PageSize" id="PageSize" class="form-control">
             <option @if ((int)ViewBag.PageSize == 10) { @Html.Raw("selected") }>10</option>
+            <option @if ((int)ViewBag.PageSize == 15) { @Html.Raw("selected") }>15</option>
 
         </select>
         <br />

@@ -72,8 +72,8 @@ namespace University.Web.Controllers
 
             }
 
-            ViewBag.Data = "Mesaje de prueba";
-            ViewBag.Message = "Mesaje de prueba";
+            //ViewBag.Data = "Mesaje de prueba";
+            //ViewBag.Message = "Mesaje de prueba";
 
             // ViewData["Data"] = "Mensaje de prueba";
 

@@ -14,6 +14,7 @@
     <p>
         <select name="PageSize" id="PageSize" class="form-control">
             <option @if ((int)ViewBag.PageSize == 10) { @Html.Raw("selected") }>10</option>
+            <option @if ((int)ViewBag.PageSize == 15) { @Html.Raw("selected") }>15</option>
 
         </select>
         <br />
@@ -39,7 +40,7 @@
                 <td>@item.Name</td>
                 <td>@item.Budget</td>
                 <td>@item.StartDate</td>
-                <td>@item.InstructorID</td>
+                <td>@item.Instructor.FullName</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", "Departments", new { id = item.DepartmentID }, new { @class = "btn btn-sm btn-primary" })
                     @Html.ActionLink("Delete", "Delete", "Departments", new { id = item.DepartmentID }, new { @class = "btn btn-sm btn-danger" })
